@@ -1,0 +1,48 @@
+generator client {
+  provider   = "prisma-client"
+  engineType = "client"
+  output     = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Board {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(15)
+  created_at  DateTime @default(now())
+
+  lists List[]
+
+  @@map("boards")
+}
+
+model List {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(15)
+  created_at  DateTime @default(now())
+
+  cards Card[]
+
+  id_board Int
+  board    Board @relation(fields: [id_board], references: [id], onDelete: Cascade)
+
+  @@map("lists")
+}
+
+model Card {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(15)
+  description String   @db.VarChar(50)
+  status      String   @db.VarChar(50)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now()) @updatedAt
+  deleted_at  DateTime?
+
+  id_list Int
+  list    List @relation(fields: [id_list], references: [id], onDelete: Cascade)
+
+  @@map("cards")
+}

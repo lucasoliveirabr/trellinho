@@ -1,0 +1,65 @@
+{
+  "name": "trellinho",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch --clear-screen=false --env-file=.env src/index.ts | pino-pretty",
+    "build": "tsup",
+    "start": "node --env-file=.env dist/index.js",
+    "clean": "rimraf dist coverage",
+    "lint": "biome check",
+    "format": "biome format --write",
+    "test": "vitest run",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@asteasolutions/zod-to-openapi": "^7.0.0",
+    "@neondatabase/serverless": "^1.0.2",
+    "@prisma/adapter-pg": "^6.18.0",
+    "@prisma/client": "^6.18.0",
+    "cors": "^2.8.5",
+    "envalid": "^8.0.0",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.2.0",
+    "helmet": "^8.0.0",
+    "http-status-codes": "^2.3.0",
+    "pino": "^9.4.0",
+    "pino-http": "^10.0.0",
+    "swagger-ui-express": "^5.0.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^24.9.2",
+    "@types/supertest": "^6.0.2",
+    "@types/swagger-ui-express": "^4.1.6",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "pino-pretty": "^11.0.0",
+    "prisma": "^6.18.0",
+    "rimraf": "^6.0.0",
+    "supertest": "^7.0.0",
+    "tsup": "^8.0.2",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.4",
+    "vite-tsconfig-paths": "^5.0.0",
+    "vitest": "^2.0.0"
+  },
+  "lint-staged": {
+    "*.{js,ts,cjs,mjs,d.cts,d.mts,json,jsonc}": ["biome check --apply --no-errors-on-unmatched"]
+  },
+  "tsup": {
+    "entry": ["src/index.ts"],
+    "outDir": "dist",
+    "format": ["esm", "cjs"],
+    "target": "es2020",
+    "sourcemap": true,
+    "clean": true,
+    "dts": true,
+    "splitting": false,
+    "skipNodeModulesBundle": true
+  }
+}
